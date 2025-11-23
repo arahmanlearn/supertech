@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Techno Services - Appliance Repair</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 100px 0 80px;
+            position: relative;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-divider {
+            width: 120px;
+            height: 4px;
+            background: white;
+            margin: 0 auto 1.5rem;
+            border-radius: 2px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 15px;
+        }
+        
+        .feature-dot {
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+        
+        /* Slider Section */
+        .slider-section {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+            display: flex;
+            align-items: center;
+        }
+        
+        .slide-content {
+            color: white;
+            max-width: 700px;
+        }
+        
+        .slide-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slide-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slide-line {
+            width: 100px;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .slider-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .slider-nav.prev {
+            left: 30px;
+        }
+        
+        .slider-nav.next {
+            right: 30px;
+        }
+        
+        .slider-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .slider-dot.active {
+            width: 40px;
+            background: white;
+            border-radius: 6px;
+        }
+        
+        .slider-counter {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
+        
+        /* Services Section */
+        .service-card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-img {
+            height: 250px;
+            object-fit: cover;
+            position: relative;
+        }
+        
+        .service-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Gallery Section */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        /* Contact Section */
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #aaa;
+        }
+        
+        footer h5 {
+            color: white;
+        }
+        
+        footer a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        footer a:hover {
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .slide-title {
+                font-size: 2.5rem;
+            }
+            
+            .slide-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .slider-section {
+                height: 400px;
+            }
+            
+            .slider-nav {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <div class="text-center">
+                <h1 class="hero-title">Super Techno Services</h1>
+                <div class="hero-divider"></div>
+                <p class="lead mb-4">Professional doorstep repair for Washing Machines, Refrigerators & Ovens</p>
+                
+                <div class="mb-5">
+                    <a href="tel:+918523035384" class="btn btn-light btn-lg me-3 mb-2">
+                        <i class="bi bi-telephone-fill me-2"></i>Call Now: +91 8523035384
+
+                    </a>
+                    <a href="#contact" class="btn btn-outline-light btn-lg mb-2">Get Free Quote</a>
+                </div>
+                
+                <div class="d-flex flex-wrap justify-content-center">
+                    <div class="feature-badge">
+                        <div class="feature-dot"></div>
+                        <span>Same Day Service</span>
+                    </div>
+                    <div class="feature-badge">
+                        <div class="feature-dot"></div>
+                        <span>Certified Technicians</span>
+                    </div>
+                    <!-- <div class="feature-badge">
+                        <div class="feature-dot"></div>
+                        <span>90 Day Warranty</span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slider Section -->
+    <section class="slider-section">
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1759434775823-40d8b9577a41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcHBsaWFuY2UlMjByZXBhaXIlMjB0ZWNobmljaWFufGVufDF8fHx8MTc2Mzc4Nzk4N3ww&ixlib=rb-4.1.0&q=80&w=1080" alt="Expert Technicians">
+            <div class="slide-overlay">
+                <div class="container">
+                    <div class="slide-content">
+                        <h2 class="slide-title">Expert Technicians</h2>
+                        <p class="slide-subtitle">Certified professionals at your service</p>
+                        <div class="slide-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1761079976271-3a78f547ca67?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB3YXNoaW5nJTIwbWFjaGluZXxlbnwxfHx8fDE3NjM4NzU2ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Washing Machine">
+            <div class="slide-overlay">
+                <div class="container">
+                    <div class="slide-content">
+                        <h2 class="slide-title">Washing Machine Repair</h2>
+                        <p class="slide-subtitle">Fast and reliable repair services</p>
+                        <div class="slide-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1758488438758-5e2eedf769ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjByZWZyaWdlcmF0b3J8ZW58MXx8fHwxNzYzODc1Njg3fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Refrigerator">
+            <div class="slide-overlay">
+                <div class="container">
+                    <div class="slide-content">
+                        <h2 class="slide-title">Refrigerator Solutions</h2>
+                        <p class="slide-subtitle">Keep your food fresh and safe</p>
+                        <div class="slide-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1646592491578-01b3053d9053?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuJTIwb3ZlbnxlbnwxfHx8fDE3NjM4NzU2ODd8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Oven">
+            <div class="slide-overlay">
+                <div class="container">
+                    <div class="slide-content">
+                        <h2 class="slide-title">Oven & Microwave Service</h2>
+                        <p class="slide-subtitle">Professional heating appliance repairs</p>
+                        <div class="slide-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-nav prev" onclick="changeSlide(-1)">
+            <i class="bi bi-chevron-left"></i>
+        </div>
+        <div class="slider-nav next" onclick="changeSlide(1)">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+        
+        <div class="slider-dots">
+            <div class="slider-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-dot" onclick="goToSlide(2)"></div>
+            <div class="slider-dot" onclick="goToSlide(3)"></div>
+        </div>
+        
+        <div class="slider-counter">
+            <span id="currentSlide">1</span> / 4
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 mb-3">Our Services</h2>
+                <p class="lead text-muted">We provide comprehensive repair solutions for all your home appliances</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1696546761269-a8f9d2b80512?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXNoaW5nJTIwbWFjaGluZSUyMHJlcGFpcnxlbnwxfHx8fDE3NjM3NzIxNzJ8MA&ixlib=rb-4.1.0&q=80&w=1080" class="card-img-top service-img" alt="Washing Machine">
+                            <div class="service-icon">
+                                <i class="bi bi-wrench"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title h4">Washing Machine Repair</h3>
+                            <p class="card-text text-muted">Complete washing machine repair and maintenance services</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>All brands serviced</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Drum & motor repair</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Water leakage fix</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Installation service</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1716193696093-9c54b6a290e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWZyaWdlcmF0b3IlMjByZXBhaXJ8ZW58MXx8fHwxNzYzODc1MzA3fDA&ixlib=rb-4.1.0&q=80&w=1080" class="card-img-top service-img" alt="Refrigerator">
+                            <div class="service-icon">
+                                <i class="bi bi-thermometer-snow"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title h4">Refrigerator Repair</h3>
+                            <p class="card-text text-muted">Expert refrigerator and freezer repair at your doorstep</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Cooling issues</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Compressor repair</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Gas refilling</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Thermostat replacement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1754568401041-11ad5769ed7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvdmVuJTIwcmVwYWlyfGVufDF8fHx8MTc2Mzg3NTMwN3ww&ixlib=rb-4.1.0&q=80&w=1080" class="card-img-top service-img" alt="Oven">
+                            <div class="service-icon">
+                                <i class="bi bi-fire"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title h4">Oven Repair</h3>
+                            <p class="card-text text-muted">Professional microwave and oven repair services</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Heating problems</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Control panel fix</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Door seal replacement</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Timer repair</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 mb-3">Our Work Gallery</h2>
+                <p class="lead text-muted">Take a look at our professional repair and maintenance services</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1696546761269-a8f9d2b80512?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXNoaW5nJTIwbWFjaGluZSUyMHJlcGFpcnxlbnwxfHx8fDE3NjM3NzIxNzJ8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Washing Machine Service">
+                        <div class="gallery-overlay">
+                            <h5>Washing Machine Service</h5>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1716193696093-9c54b6a290e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWZyaWdlcmF0b3IlMjByZXBhaXJ8ZW58MXx8fHwxNzYzODc1MzA3fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Refrigerator Repair">
+                        <div class="gallery-overlay">
+                            <h5>Refrigerator Repair</h5>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1754568401041-11ad5769ed7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvdmVuJTIwcmVwYWlyfGVufDF8fHx8MTc2Mzg3NTMwN3ww&ixlib=rb-4.1.0&q=80&w=1080" alt="Oven Maintenance">
+                        <div class="gallery-overlay">
+                            <h5>Oven Maintenance</h5>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1759434775823-40d8b9577a41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcHBsaWFuY2UlMjByZXBhaXIlMjB0ZWNobmljaWFufGVufDF8fHx8MTc2Mzc4Nzk4N3ww&ixlib=rb-4.1.0&q=80&w=1080" alt="Professional Technician">
+                        <div class="gallery-overlay">
+                            <h5>Professional Technician</h5>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1513612027093-46da490bbd5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob21lJTIwcmVwYWlyJTIwc2VydmljZXxlbnwxfHx8fDE3NjM3Njg0MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Home Service">
+                        <div class="gallery-overlay">
+                            <h5>Home Service</h5>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1586208958839-06c17cacdf08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxraXRjaGVuJTIwYXBwbGlhbmNlc3xlbnwxfHx8fDE3NjM4NTY5Njl8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Kitchen Appliances">
+                        <div class="gallery-overlay">
+                            <h5>Kitchen Appliances</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 mb-3">Contact Us</h2>
+                <p class="lead text-muted">Get in touch with us for quick and reliable appliance repair services</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <h3 class="h4 mb-4">Get In Touch</h3>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <div>
+                            <h5>Phone</h5>
+                            <a href="tel:+918523035384" class="text-primary text-decoration-none">+918523035384</a>
+                            <p class="text-muted mb-0">Mon-Sat, 8:00 AM - 8:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <div>
+                            <h5>Email</h5>
+                            <a href="mailto:ar8915648@gmail.com" class="text-primary text-decoration-none">ar8915648@gmail.com</a>
+                            <p class="text-muted mb-0">We'll respond within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div>
+                            <h5>Address</h5>
+                            <p class="mb-0">Tolichowki, Hyderabad<br>Telangana, India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex">
+                        <div class="contact-icon me-3">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                        <div>
+                            <h5>Working Hours</h5>
+                            <p class="mb-0">Monday - Saturday: 8:00 AM - 8:00 PM<br>Sunday: 9:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="contact-form">
+                        <h3 class="h4 mb-4">Request a Service</h3>
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Your name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="+91 XXXXX XXXXX">
+                            </div>
+                            <div class="mb-3">
+                                <label for="service" class="form-label">Select Service</label>
+                                <select class="form-select" id="service">
+                                    <option selected>Choose a service</option>
+                                    <option value="washing-machine">Washing Machine Repair</option>
+                                    <option value="refrigerator">Refrigerator Repair</option>
+                                    <option value="oven">Oven Repair</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Describe your issue..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 py-3">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-wrench-adjustable-circle-fill text-primary fs-2 me-2"></i>
+                        <h5 class="mb-0">Super Techno Services</h5>
+                    </div>
+                    <p>Your trusted partner for professional appliance repair services at your doorstep.</p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h5 class="mb-3">Our Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#services">Washing Machine Repair</a></li>
+                        <li class="mb-2"><a href="#services">Refrigerator Repair</a></li>
+                        <li class="mb-2"><a href="#services">Oven Repair</a></li>
+                        <li class="mb-2"><a href="#services">Installation Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#services">Services</a></li>
+                        <li class="mb-2"><a href="#gallery">Gallery</a></li>
+                        <li class="mb-2"><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="bi bi-telephone me-2"></i>
+                            <a href="tel:+918523035384">+918523035384</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-envelope me-2"></i>
+                            <a href="mailto:ar8915648@gmail.com">ar8915648@gmail.com</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            Tolichowki, Hyderabad, Telangana
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 Super Techno Services. All rights reserved. Professional Appliance Repair Services.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Slider JS -->
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const totalSlides = slides.length;
+        let autoSlideInterval;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            
+            showSlide(currentSlideIndex);
+            resetAutoSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+            resetAutoSlide();
+        }
+
+        function autoSlide() {
+            currentSlideIndex++;
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            }
+            showSlide(currentSlideIndex);
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(autoSlide, 5000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        // Initialize slider
+        showSlide(currentSlideIndex);
+        startAutoSlide();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
